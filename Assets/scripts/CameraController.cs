@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public float speed = 2f;
-    private float yoffset = 2f;
+    public float yoffset = 2f;
     public Transform target;
 
 

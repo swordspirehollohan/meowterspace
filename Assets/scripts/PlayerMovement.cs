@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+	private bool isfacingRight = true;
 	public float speed = 3f;
-	public float jumpforce = 3f;
 	private Rigidbody2D body;
 
+	public float jumpforce = 3f;
 	private bool isJumping;
 
+
 	private Animator anim;
+
 
 	private void Awake()
 	{
@@ -20,11 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
 	private void Update()
 	{
-		body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
+		float xaxis = Input.GetAxis("Horizontal");
 
-		if(Input.GetKeyDown(KeyCode.Space) && isJumping == false)
+		body.velocity = new Vector2(xaxis * speed, body.velocity.y);
+
+		if(Input.GetKeyDown(KeyCode.Space) && !isJumping)
 		{
 			body.velocity = new Vector2(body.velocity.x, jumpforce);
+			anim.SetBool("isJumping", true);
 		}
 
 		if(anim != null)
@@ -38,13 +44,24 @@ public class PlayerMovement : MonoBehaviour
 				anim.SetBool("isRunning", false);
 			}
 		}
+		if(!isfacingRight && xaxis >0)
+		{
+			Flip();
+		}
+		else if(isfacingRight && xaxis <0)
+		{
+			Flip();
+		}
+
 	}
+	
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
 		if(other.gameObject.CompareTag("Floor"))
 		{
 			isJumping = false; 
+			anim.SetBool("isJumping", false);
 		}
 	}
 
@@ -54,6 +71,14 @@ public class PlayerMovement : MonoBehaviour
 		{
 			isJumping = true;
 		}
+	}
+
+	public void Flip()
+	{
+		isfacingRight = !isfacingRight;
+		Vector3 localScale = transform.localScale;
+		localScale.x *= -1f;
+		transform.localScale = localScale;
 	}
 
 }
