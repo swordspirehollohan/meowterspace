@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - collectable
+  - projectile
   layers:
   - Default
   - TransparentFX
