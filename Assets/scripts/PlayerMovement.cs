@@ -10,8 +10,11 @@ public class PlayerMovement : MonoBehaviour
 
 	private bool isJumping;
 
+	private Animator anim;
+
 	private void Awake()
 	{
+		anim = GetComponent<Animator>();
 		body = GetComponent<Rigidbody2D>();
 	}
 
@@ -22,6 +25,18 @@ public class PlayerMovement : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Space) && isJumping == false)
 		{
 			body.velocity = new Vector2(body.velocity.x, jumpforce);
+		}
+
+		if(anim != null)
+		{
+			if(body.velocity != Vector2.zero)
+			{
+				anim.SetBool("isRunning", true);
+			}
+			else
+			{
+				anim.SetBool("isRunning", false);
+			}
 		}
 	}
 
