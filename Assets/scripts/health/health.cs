@@ -34,7 +34,7 @@ public class health : MonoBehaviour
 		   
 	   }
    }
-   private void Die()
+   public void Die()
    {
 	   Debug.Log("DEATHHHH");
 	   //anim.SetTrigger("Death");
