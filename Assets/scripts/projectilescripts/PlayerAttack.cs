@@ -13,7 +13,12 @@ public class PlayerAttack : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            Instantiate(ProjectilePrefab, LaunchOffset.position, transform.rotation);
+            Quaternion projectileRotation = LaunchOffset.rotation;
+
+            if(transform.localScale.x <0){
+                projectileRotation *= Quaternion.Euler(0,0,180);
+            }
+            Instantiate(ProjectilePrefab, LaunchOffset.position, projectileRotation);
         }
     }
 }
