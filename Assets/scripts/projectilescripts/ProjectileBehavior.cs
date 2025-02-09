@@ -6,6 +6,7 @@ public class ProjectileBehavior : MonoBehaviour
 {
     public float Speed = 4f;
     public float destroyacid = 5f;
+    public float damageamount = 1f;
 
     private void Update()
     {
@@ -14,9 +15,20 @@ public class ProjectileBehavior : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        enemyhealth enemy = collision.GetComponent<enemyhealth>();
+
+        if (enemy != null)
+        {
+            enemy.TakeDamage(damageamount);
+            Destroy(gameObject);
+            Debug.Log("enemyOUC");
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     
