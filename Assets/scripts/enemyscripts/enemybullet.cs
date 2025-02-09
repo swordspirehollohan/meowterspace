@@ -8,6 +8,7 @@ public class enemybullet : MonoBehaviour
     private Rigidbody2D rigid;
 
     public float force = 4f;
+    private float timer;
 
     void Start()
     {
@@ -21,6 +22,20 @@ public class enemybullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+
+        if(timer > 9)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<health>().TakeDamage(1);
+            Destroy(gameObject);
+        }
     }
 }
